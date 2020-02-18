@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/certifiedcloudarchitect/go-mvc/domain"
+	"github.com/certifiedcloudarchitect/go-mvc/mvc/domain"
 )
 
 func GetUser(userId int64) (*domain.User, error) {

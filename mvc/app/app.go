@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/certifiedcloudarchitect/go-mvc/controllers"
+	"github.com/certifiedcloudarchitect/go-mvc/mvc/controllers"
 	"net/http"
 )
 

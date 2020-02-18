@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/certifiedcloudarchitect/go-mvc/app"
+	"github.com/certifiedcloudarchitect/go-mvc/mvc/app"
 )
 
 func main() {
