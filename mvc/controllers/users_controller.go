@@ -1,25 +1,30 @@
 package controllers
 
 import (
-	"encoding/json"
 	"github.com/certifiedcloudarchitect/go-mvc/mvc/services"
+	"github.com/certifiedcloudarchitect/go-mvc/mvc/utils"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
-func GetUser(resp http.ResponseWriter, req *http.Request) {
-	userId, err := strconv.ParseInt(req.URL.Query().Get("user_id"), 10, 64)
+func GetUser(c *gin.Context) {
+	userId, err := strconv.ParseInt(c.Param("user_id"), 10, 64)
 	if err != nil {
-		resp.WriteHeader(http.StatusNotFound)
-		resp.Write([]byte(("user_id must ba a number")))
+		apiErr := &utils.ApplicationError{
+			Message:    "user_id must be a number",
+			StatusCode: http.StatusBadRequest,
+			Code:       "bad_request",
+		}
+		utils.RespondError(c, apiErr)
 		return
 	}
-	user, err := services.GetUser(userId)
-	if err != nil {
-		resp.WriteHeader(http.StatusNotFound)
-		resp.Write([]byte(err.Error()))
+
+	user, apiErr := services.UsersService.GetUser(userId)
+	if apiErr != nil {
+		utils.RespondError(c, apiErr)
 		return
 	}
-	jsonValue, _ := json.Marshal(user)
-	resp.Write(jsonValue)
+
+	utils.Respond(c, http.StatusOK, user)
 }
